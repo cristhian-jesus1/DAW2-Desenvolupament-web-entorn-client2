@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard d'Inventari - Pràctica JS Arrays</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <header class="header">
+      <h1>📊 Dashboard de Gestió d'Inventari</h1>
+      <p>Pràctica avançada de mètodes d'arrays i immutabilitat en JavaScript</p>
+    </header>
+
+    <!-- Targetes de Mètriques (Stats) -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <h3>Valor Total</h3>
+        <div class="value" id="val-total">0.00 €</div>
+        <span class="subtext">Calculat amb reduce()</span>
+      </div>
+      <div class="stat-card">
+        <h3>Últim Producte Afegit</h3>
+        <div class="value-sm" id="val-ultim">-</div>
+        <span class="subtext">Obtingut amb at(-1)</span>
+      </div>
+      <div class="stat-card">
+        <h3>Estat de Stock</h3>
+        <div class="value-sm" id="val-sense-stock">-</div>
+        <span class="subtext">Verificat amb some()</span>
+      </div>
+      <div class="stat-card">
+        <h3>Preus Vàlids (>0€)</h3>
+        <div class="value-sm" id="val-preu-valid">-</div>
+        <span class="subtext">Verificat amb every()</span>
+      </div>
+    </section>
+
+    <div class="main-layout">
+      <!-- Formulari d'Alta / Edició -->
+      <aside class="card sidebar">
+        <h2 id="form-title">➕ Afegir Producte</h2>
+        <form id="form-producte">
+          <input type="hidden" id="edit-id" value="">
+          
+          <div class="form-group">
+            <label>Nom del producte</label>
+            <input type="text" id="nom" placeholder="Ex: Auriculars Bluetooth" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Categoria</label>
+            <select id="categoria" required>
+              <option value="">Selecciona Categoria</option>
+              <option value="Electrònica">Electrònica</option>
+              <option value="Roba">Roba</option>
+              <option value="Llibres">Llibres</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Preu (€)</label>
+              <input type="number" id="preu" placeholder="0.00" step="0.01" required>
+            </div>
+            <div class="form-group">
+              <label>Stock</label>
+              <input type="number" id="stock" placeholder="0" required>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-submit" class="btn btn-primary">Guardar (push / with)</button>
+          <button type="button" id="btn-cancel" class="btn btn-secondary" style="display: none;">Cancel·lar</button>
+        </form>
+
+        <hr class="divider">
+
+        <h3>🔍 Cerca Avançada (findLast)</h3>
+        <div class="form-group">
+          <select id="cerca-cat-last">
+            <option value="Electrònica">Últim d'Electrònica</option>
+            <option value="Roba">Últim de Roba</option>
+            <option value="Llibres">Últim de Llibres</option>
+          </select>
+          <button id="btn-cerca-last" class="btn btn-outline">Trobar darrer afegit</button>
+        </div>
+      </aside>
+
+      <!-- Secció Principal: Taula i Filtres -->
+      <main class="card content">
+        <div class="table-header-controls">
+          <div class="search-box">
+            <input type="text" id="input-cerca" placeholder="Filtrar per nom (includes)...">
+          </div>
+          <div class="filter-box">
+            <select id="filtre-categoria">
+              <option value="Totes">Totes les categories</option>
+              <option value="Electrònica">Electrònica</option>
+              <option value="Roba">Roba</option>
+              <option value="Llibres">Llibres</option>
+            </select>
+          </div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th class="sortable" data-sort="nom">Nom <span class="sort-icon">⇅</span></th>
+              <th>Categoria</th>
+              <th class="sortable" data-sort="preu">Preu (€) <span class="sort-icon">⇅</span></th>
+              <th class="sortable" data-sort="stock">Stock <span class="sort-icon">⇅</span></th>
+              <th>Accions</th>
+            </tr>
+          </thead>
+          <tbody id="taula-productes">
+            <!-- Renderitzat JS -->
+          </tbody>
+        </table>
+      </main>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
